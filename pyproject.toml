@@ -1,0 +1,27 @@
+[project]
+name = "a198683"
+version = "0.1.0"
+description = "Computer-assisted determination of a(12) = 2926 for OEIS A198683 (distinct values of power towers of i)"
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Chandram Dutta" }]
+requires-python = ">=3.12"
+dependencies = [
+    "mpmath>=1.3.0",
+    "python-flint>=0.9.0",
+]
+
+[project.scripts]
+a198683 = "a198683.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=9.2.0"]
+
+[build-system]
+requires = ["uv_build>=0.12.23,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["slow: the full verification suite (about 90 seconds); run with `pytest -m slow`"]
+addopts = "-m 'not slow'"

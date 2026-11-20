@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+*.egg-info
+.venv/
+.pytest_cache/
+
+# Published OEIS tables, downloaded on first use (not redistributed here)
+data/
+
+.DS_Store
