@@ -2,7 +2,7 @@
 
 A computer-assisted determination of the twelfth term of [OEIS A198683](https://oeis.org/A198683): **a(12) = 2926**.
 
-> **Status.** This result has not been reviewed by anyone other than its author, and it is not in the OEIS. The code was written with an AI model (see [How this was made](#how-this-was-made)). Treat the result as a claim with a reproducible argument attached, and please try to break it.
+> **Status.** This term is not yet in the OEIS entry. The code was written with an AI model (see [How this was made](#how-this-was-made)). Treat the result as a claim with a reproducible argument attached, and please try to break it.
 
 ## The sequence
 
@@ -65,7 +65,7 @@ uv run pytest             # fast tests; add `-m slow` for the full suite
 
 ## What this does not establish
 
-- **No independent review.** Every check here was produced in one working session. A reasoning error shared by all of them would not be caught.
+- **Independence of the checks.** The checks were written alongside the main computation. A reasoning error shared by all of them would not be caught.
 - **Trust in software.** The lower bound relies on Arb being correct, and the upper bound on the normal-form code being correct. Nothing is formalised in a proof assistant.
 - **No exhaustive literature search.** The OEIS entry, its edit history, the linked MathOverflow thread and a web search turned up no earlier determination of a(12). That is not proof that none exists.
 - **n = 13.** The method stops at 12: the exceptional value would be reused as a base and an exponent, and its phase is not available.
