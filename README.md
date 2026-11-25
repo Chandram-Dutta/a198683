@@ -2,31 +2,31 @@
 
 A computer-assisted determination of the twelfth term of [OEIS A198683](https://oeis.org/A198683): **a(12) = 2926**.
 
-> **Status.** This term is not yet in the OEIS entry. The code was written with an AI model (see [How this was made](#how-this-was-made)). Treat the result as a claim with a reproducible argument attached, and please try to break it.
+> **Status.** This term is now published in [OEIS A198683](https://oeis.org/A198683). The code was written with an AI model (see [How this was made](#how-this-was-made)). The full computation and table are included here for independent reproduction—please try to break them.
 
 ## The sequence
 
-Let *i* be the square root of −1, and define powers of complex numbers by the principal value: *a^b* = exp(*b* · Log *a*), where the imaginary part of Log *a* lies in (−π, π].
+Let _i_ be the square root of −1, and define powers of complex numbers by the principal value: _a^b_ = exp(_b_ · Log _a_), where the imaginary part of Log _a_ lies in (−π, π].
 
-Take *n* copies of *i* and combine them with `^`, bracketed in every possible way. For example, with three copies there are two bracketings, `i^(i^i)` and `(i^i)^i`, and they give different values. **a(n) is the number of distinct values.**
+Take _n_ copies of _i_ and combine them with `^`, bracketed in every possible way. For example, with three copies there are two bracketings, `i^(i^i)` and `(i^i)^i`, and they give different values. **a(n) is the number of distinct values.**
 
-| n | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| a(n) | 1 | 1 | 2 | 3 | 7 | 15 | 34 | 77 | 187 | 462 | 1152 | **2926** |
+| n    | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   | 10  | 11   | 12       |
+| ---- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---- | -------- |
+| a(n) | 1   | 1   | 2   | 3   | 7   | 15  | 34  | 77  | 187 | 462 | 1152 | **2926** |
 
-The OEIS entry lists the terms through a(11) and records a(12) as "said to be either 2919 or 2926", unconfirmed. This repository reproduces the eleven listed terms and determines the twelfth.
+Previously, the OEIS entry listed terms through a(11) and recorded a(12) as "said to be either 2919 or 2926", unconfirmed. This repository reproduces the first eleven terms and determines the twelfth.
 
 ## Why it was open
 
-The numbers defeat ordinary arithmetic. With 10 copies, one bracketing is about −6.8 × 10³⁴ − 6.0 × 10³⁴ *i*; raising *i* to that gives a number of size *e*^(10³⁵); raising *i* to *that* gives a number no floating-point format can hold.
+The numbers defeat ordinary arithmetic. With 10 copies, one bracketing is about −6.8 × 10³⁴ − 6.0 × 10³⁴ _i_; raising _i_ to that gives a number of size _e_^(10³⁵); raising _i_ to _that_ gives a number no floating-point format can hold.
 
 In 2017 Jon E. Schoenfield published [tables](https://oeis.org/A198683/a198683.txt) settling every bracketing up to n = 11, and described in the [entry's history](https://oeis.org/history?seq=A198683) what stopped him at n = 12: 27 bracketings evaluated to infinite or undefined results (covering at most five values, of unknown distinctness), two evaluated to zero although their true values are non-zero, and rounding error could not be ruled out.
 
 ## Method
 
-1. **Track logarithms, not values.** Each value *z* is stored as its principal logarithm *L*. Two values are equal exactly when their principal logarithms are equal, and *L*(*a^b*) is obtained from exp(*L*(*b*)) · *L*(*a*) by removing whole turns of 2π*i*. A value of size *e*^(10³⁵) has a logarithm of size 10³⁵, which is easy to hold.
+1. **Track logarithms, not values.** Each value _z_ is stored as its principal logarithm _L_. Two values are equal exactly when their principal logarithms are equal, and _L_(_a^b_) is obtained from exp(_L_(_b_)) · _L_(_a_) by removing whole turns of 2π*i*. A value of size _e_^(10³⁵) has a logarithm of size 10³⁵, which is easy to hold.
 2. **Lower bound, by ball arithmetic.** Each logarithm is enclosed in a ball (midpoint and radius) by [Arb](https://arblib.org), which guarantees the true number lies inside. Values whose balls do not overlap are provably different.
-3. **Upper bound, by exact algebra.** Writing *L* = (*i*π/2) · *P*, the quantity *P* obeys *P*(*a^b*) = *Z*(*b*) · *P*(*a*) − 4*k*, with *Z*(*b*) the value of *b* and *k* an integer certified by step 2. *P* is kept as an exact polynomial in formal symbols. Bracketings with identical polynomials are provably equal.
+3. **Upper bound, by exact algebra.** Writing _L_ = (*i*π/2) · _P_, the quantity _P_ obeys _P_(_a^b_) = _Z_(_b_) · _P_(_a_) − 4*k*, with _Z_(_b_) the value of _b_ and _k_ an integer certified by step 2. _P_ is kept as an exact polynomial in formal symbols. Bracketings with identical polynomials are provably equal.
 
 At n = 12 the two bounds are both 2926.
 
